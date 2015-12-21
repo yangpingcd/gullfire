@@ -1,0 +1,70 @@
+upstart is used by Ubuntu 14.04 LTS 
+systemd is used by Ubuntu 15.04 and CentOS 7.1
+
+
+install gullfire in linux
+
+1. install golang
+	#sudo apt-get install golang
+	#sudo yum install golang
+	
+	wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
+	tar -xzf go1.5.linux-amd64.tar.gz
+	sudo mv go /usr/local/go
+	
+
+2. install gcc, git, dos2unix
+	sudo apt-get install gcc git dos2unix
+	sudo yum install gcc git dos2unix
+		
+	
+		
+4. build gullfire
+	export GOROOT=/usr/local/go
+	export PATH=$PATH:$GOROOT/bin
+	export GOPATH=~/gocode
+	go get github.com/yangpingcd/gullfire
+	
+5. install gullfire as service
+	cd $GOPATH/bin
+	cp $GOPATH/src/github.com/yangpingcd/gullfire/gullfire.unix.ini ./gullfire.ini
+	dos2unix gullfire.ini
+	vi gullfire.ini
+	sudo ./gullfire -service=install -config=$GOPATH/bin/gullfire.ini
+	[upstart]
+		vi /etc/init/gullfire.conf
+	[systemd]
+		vi /etc/systemd/system/gullfire.service
+	
+6. run gullfire service
+	[upstart]
+		sudo start gullfire
+	[systemd]
+		sudo systemctl start gullfire
+	
+	
+7. stop gullfire service
+	[upstart]
+		sudo stop gullfire
+	[systemd]
+		sudo systemctl stop gullfire
+	
+
+
+
+
+install gullfire in docker (CoreOS)
+
+
+
+install gullfire in windows
+1. get gullfire.exe, gullfire.ini from Sliq
+
+2. install gullfire service
+	run command line as Administrator
+	gullfire -service=install -config=c:\sliq\gullfire.ini
+	
+3. uninstall gullfire service
+	run command line as Administrator
+	gullfire -service=uninstall
+	
